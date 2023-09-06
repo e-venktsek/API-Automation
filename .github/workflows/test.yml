@@ -1,0 +1,39 @@
+name: Run Cypress Tests
+
+on:
+  push:
+    branches:
+      - main  # Replace with your default branch if not 'main'
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Use the Node.js version you are using
+
+      - name: Install Dependencies
+        run: npm install  # Or 'yarn install' if you use Yarn
+
+      - name: Run Cypress Tests
+        run: npm run cypress:run  # Replace with your own Cypress run script
+
+      - name: Upload Screenshots (if failed)
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload Videos (if failed)
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-videos
+          path: cypress/videos
