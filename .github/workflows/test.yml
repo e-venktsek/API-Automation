@@ -22,7 +22,7 @@ jobs:
         run: npm install  # Or 'yarn install' if you use Yarn
 
       - name: Run Cypress Tests
-        run: npm run cypress:run  # Replace with your own Cypress run script
+        run: npx cypress run
 
       - name: Upload Screenshots (if failed)
         if: failure()
